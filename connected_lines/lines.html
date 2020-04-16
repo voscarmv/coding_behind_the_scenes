@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lines</title>
+  </head>
+  <body>
+    <canvas style="border-style:solid;padding: 0;" id="canv"></canvas>
+    <pre id="coords"></pre>
+    <script>
+      var c = document.getElementById("canv");
+      var ctx = c.getContext("2d");
+
+      // var x = 0;
+      // var y = 0;
+
+      var posx = 40;
+      var posy = 20;
+      var width = 30;
+      var height = 10;
+
+      var cwidth = c.width;
+      var cheight = c.height;
+
+      const rect = c.getBoundingClientRect();
+
+      c.addEventListener('mousemove', e => {
+          posx = e.clientX - rect.left;
+          posy = e.clientY - rect.top;
+          // x = e.clientX;
+          // y = e.clientY;
+          // var output = "";
+          // if(x >= posx && x <= posx + width && y >= posy && y <= posy + height){
+          //   output = "[" + x + ", " + y + "]";
+          // } else {
+          //   output = x + ", " + y ;
+          // }
+          // document.getElementById("coords").innerHTML = output;
+          ctx.clearRect(0, 0, cwidth, cheight);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(posx, posy);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.rect(posx, posy, width, height);
+          ctx.stroke();
+      });
+
+      // ctx.beginPath();
+      // ctx.moveTo(0, 0);
+      // ctx.lineTo(posx, posy);
+      // ctx.stroke();
+      // ctx.beginPath();
+      // ctx.rect(posx, posy, width, height);
+      // ctx.stroke();
+    </script>
+  </body>
+</html>
