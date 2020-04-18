@@ -16,17 +16,17 @@
           this.ypos = y;
           this.size = wh;
           this.ctx = ctxt;
-          this.rect = this.ctx.canvas.getBoundingClientRect();
+          this.selected = false;
+          this.pointerx = 0;
+          this.pointery = 0;
         }
         draw(){
           this.ctx.beginPath();
-          this.ctx.rect(this.xpos, this.xpos, this.size, this.size);
+          this.ctx.rect(this.xpos, this.ypos, this.size, this.size);
           this.ctx.stroke();
         }
         pointer_in(ptrx, ptry){
-          let ptrposx = ptrx - this.rect.left;
-          let ptrposy = ptry - this.rect.top;
-          if(ptrposx >= this.xpos && ptrposx <= this.xpos + this.size && ptrposy >= this.ypos && ptrposy <= this.ypos + this.size){
+          if(ptrx >= this.xpos && ptrx <= this.xpos + this.size && ptry >= this.ypos && ptry <= this.ypos + this.size){
             return true;
           } else {
             return false;
@@ -36,43 +36,46 @@
 
       let sq1 = new Square(10,10,30,ctx);
       sq1.draw();
-      console.log(sq1.pointer_in(20,20))
+      console.log(sq1.pointer_in(20,20));
 
-      c.addEventListener('mousemove', e => {
-          var output = "";
-          let x = e.clientX;
-          let y = e.clientY;
+let rect = ctx.canvas.getBoundingClientRect();
 
-          if(sq1.pointer_in(x,y)){
-            output = "[" + x + ", " + y + "]";
-          } else {
-            output = x + ", " + y ;
-          }
-          // posx = e.clientX - rect.left;
-          // posy = e.clientY - rect.top;
-          // if(x >= posx && x <= posx + width && y >= posy && y <= posy + height){
-            // output = "[" + x + ", " + y + "]";
-          // } else {
-          //   output = x + ", " + y ;
-          // }
-          document.getElementById("coords").innerHTML = output;
-          // ctx.clearRect(0, 0, cwidth, cheight);
-          // ctx.beginPath();
-          // ctx.moveTo(0, 0);
-          // ctx.lineTo(posx, posy);
-          // ctx.stroke();
-          // ctx.beginPath();
-          // ctx.rect(posx, posy, width, height);
-          // ctx.stroke();
-      });
+c.addEventListener('mousedown', e => {
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
 
-      // ctx.beginPath();
-      // ctx.moveTo(0, 0);
-      // ctx.lineTo(posx, posy);
-      // ctx.stroke();
-      // ctx.beginPath();
-      // ctx.rect(posx, posy, width, height);
-      // ctx.stroke();
+  if(sq1.pointer_in(x,y)){
+    sq1.selected = true;
+    sq1.pointerx = x - sq1.xpos;
+    sq1.pointery = y - sq1.ypos;
+  }
+});
+
+c.addEventListener('mousemove', e => {
+  var output = "";
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+
+  if(sq1.pointer_in(x,y)){
+    output = "[" + x + ", " + y + "]";
+  } else {
+    output = x + ", " + y ;
+  }
+
+  if(sq1.selected){
+    console.log(x + ", " + y);
+    sq1.xpos = x - sq1.pointerx;
+    sq1.ypos = y - sq1.pointery;
+    sq1.draw();
+  }
+
+  document.getElementById("coords").innerHTML = output;
+});
+
+window.addEventListener('mouseup', e => {
+  sq1.selected = false;
+});
+
     </script>
   </body>
 </html>
