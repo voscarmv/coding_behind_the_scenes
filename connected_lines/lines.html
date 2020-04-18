@@ -10,39 +10,60 @@
       var c = document.getElementById("canv");
       var ctx = c.getContext("2d");
 
-      // var x = 0;
-      // var y = 0;
+      class Square {
+        constructor(x, y, wh, ctxt){
+          this.xpos = x;
+          this.ypos = y;
+          this.size = wh;
+          this.ctx = ctxt;
+          this.rect = this.ctx.canvas.getBoundingClientRect();
+        }
+        draw(){
+          this.ctx.beginPath();
+          this.ctx.rect(this.xpos, this.xpos, this.size, this.size);
+          this.ctx.stroke();
+        }
+        pointer_in(ptrx, ptry){
+          let ptrposx = ptrx - this.rect.left;
+          let ptrposy = ptry - this.rect.top;
+          if(ptrposx >= this.xpos && ptrposx <= this.xpos + this.size && ptrposy >= this.ypos && ptrposy <= this.ypos + this.size){
+            return true;
+          } else {
+            return false;
+          }
+        }
+      };
 
-      var posx = 40;
-      var posy = 20;
-      var width = 30;
-      var height = 10;
-
-      var cwidth = c.width;
-      var cheight = c.height;
-
-      const rect = c.getBoundingClientRect();
+      let sq1 = new Square(10,10,30,ctx);
+      sq1.draw();
+      console.log(sq1.pointer_in(20,20))
 
       c.addEventListener('mousemove', e => {
-          posx = e.clientX - rect.left;
-          posy = e.clientY - rect.top;
-          // x = e.clientX;
-          // y = e.clientY;
-          // var output = "";
+          var output = "";
+          let x = e.clientX;
+          let y = e.clientY;
+
+          if(sq1.pointer_in(x,y)){
+            output = "[" + x + ", " + y + "]";
+          } else {
+            output = x + ", " + y ;
+          }
+          // posx = e.clientX - rect.left;
+          // posy = e.clientY - rect.top;
           // if(x >= posx && x <= posx + width && y >= posy && y <= posy + height){
-          //   output = "[" + x + ", " + y + "]";
+            // output = "[" + x + ", " + y + "]";
           // } else {
           //   output = x + ", " + y ;
           // }
-          // document.getElementById("coords").innerHTML = output;
-          ctx.clearRect(0, 0, cwidth, cheight);
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(posx, posy);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.rect(posx, posy, width, height);
-          ctx.stroke();
+          document.getElementById("coords").innerHTML = output;
+          // ctx.clearRect(0, 0, cwidth, cheight);
+          // ctx.beginPath();
+          // ctx.moveTo(0, 0);
+          // ctx.lineTo(posx, posy);
+          // ctx.stroke();
+          // ctx.beginPath();
+          // ctx.rect(posx, posy, width, height);
+          // ctx.stroke();
       });
 
       // ctx.beginPath();
