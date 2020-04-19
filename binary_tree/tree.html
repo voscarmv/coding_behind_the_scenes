@@ -5,10 +5,12 @@
   </head>
   <body>
     <canvas style="border-style:solid;padding: 0;" id="canv"></canvas>
-    <pre id="coords"></pre>
+    <pre id="array"></pre>
     <script>
       var c = document.getElementById("canv");
       var ctx = c.getContext("2d");
+      // c.width = 1000;
+      // c.height = 500;
 
       function recur(n){
         if (n > 0) {
@@ -19,12 +21,11 @@
       }
       console.log(recur(6));
 
-
-
       let tree = [1, 2, 3, null, 5, 6, 7, 8, null, 9];
 
-      post_order_tree(tree, 0, 0, 0, c.width, c.height);
-      function post_order_tree(arr, i, xpos, ypos, xsize, ysize){
+      document.getElementById("array").innerHTML = tree.toString();
+      post_order_tree(tree, 0, 0, 0, c.width, c.height, 0, 0);
+      function post_order_tree(arr, i, xpos, ypos, xsize, ysize, parent_node_xcenter, parent_node_ycenter){
         if(i >= arr.length || arr[i] == null){
           return false;
         }
@@ -38,17 +39,27 @@
         let right_xsize = xsize/2;
         let right_ysize = ysize/2;
 
+        let node_xcenter = xpos + xsize/2;
+        let node_ycenter = ypos + ysize/4;
+
         let left = 2*i + 1;
         let right = 2*i + 2;
 
         // console.log(arr[i]+": xpos "+xpos+", ypos: "+ypos+", xsize: "+xsize+", ysize: "+ysize);
 
-        ctx.beginPath();
-        ctx.rect(xpos,ypos,xsize,ysize);
-        ctx.stroke();
+        post_order_tree(arr, left, left_xpos,left_ypos,left_xsize,left_ysize, node_xcenter, node_ycenter);
+        post_order_tree(arr, right, right_xpos,right_ypos,right_xsize,right_ysize, node_xcenter, node_ycenter);
 
-        post_order_tree(arr, left, left_xpos,left_ypos,left_xsize,left_ysize);
-        post_order_tree(arr, right, right_xpos,right_ypos,right_xsize,right_ysize);
+        ctx.font = "15px Comic Sans MS";
+        ctx.fillText(arr[i], node_xcenter, node_ycenter);
+
+        ctx.beginPath();
+        // ctx.rect(xpos,ypos,xsize,ysize);
+        if(parent_node_xcenter != 0){
+          ctx.moveTo(parent_node_xcenter, parent_node_ycenter);
+          ctx.lineTo(node_xcenter, node_ycenter);
+        }
+        ctx.stroke();
       }
     </script>
   </body>
