@@ -10,30 +10,42 @@
       var c = document.getElementById("canv");
       var ctx = c.getContext("2d");
 
-      let tree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6];
-      post_order_tree(tree, 0, 0, 0, c.width, c.height);
-      function post_order_tree(arr, i, xpos, ypos, xsize, ysize){
-        let nodex = xpos + (xsize - xpos) / 2;
-        let nodey = ypos;
-        let lnodex = xpos + (nodex / 2);
-        let lrnodey = ypos + (ysize - ypos) / 2;
-        let rnodex = nodex + nodex / 2;
-        let left = 2*i + 1;
-        if(left < arr.length){
-          this.ctx.beginPath();
-          this.ctx.moveTo(nodex, nodey);
-          this.ctx.lineTo(lnodex, lrnodey);
-          this.ctx.stroke();
-          post_order_tree(arr, left, (xpos)/2 , 0, lnodex, lrnodey);
+      let tree = [1, 2, 3, 4, 5, 6, 7];
+      post_order_tree(tree, 4, 0, 0, c.width, c.height);
+      function recur(n){
+        if (n > 0) {
+          return "("+recur(n-1)+"+"+recur(n-1)+")";
+        } else {
+          return 0;
         }
-        let right = 2*i + 2;
-        if(right < arr.length){
-          this.ctx.beginPath();
-          this.ctx.moveTo(nodex, nodey);
-          this.ctx.lineTo(rnodex, lrnodey);
-          this.ctx.stroke();
-          post_order_tree(arr, right, xpos+(xsize-xpos)/2, ypos+(ysize-ypos)/2, rnodex, lrnodey + ysize/2);
-        }        
+      }
+      console.log(recur(6));
+      function post_order_tree(arr, i, xpos, ypos, xsize, ysize){
+        if(i < 0){
+          return false;
+        }
+        let left_xpos = xpos;
+        let left_ypos = ypos + ysize/2;
+        let left_xsize = xsize/2;
+        let left_ysize = ysize/2;
+
+        let right_xpos = xpos + xsize/2;
+        let right_ypos = ypos + ysize/2;
+        let right_xsize = xsize/2;
+        let right_ysize = ysize/2;
+
+        // console.log(arr[i]+": xpos "+xpos+", ypos: "+ypos+", xsize: "+xsize+", ysize: "+ysize);
+
+        ctx.beginPath();
+        ctx.rect(left_xpos,left_ypos,left_xsize,left_ysize);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.rect(right_xpos,right_ypos,right_xsize,right_ysize);
+        ctx.stroke();
+
+        post_order_tree(arr, i-1, left_xpos,left_ypos,left_xsize,left_ysize);
+        post_order_tree(arr, i-1, right_xpos,right_ypos,right_xsize,right_ysize);
       }
     </script>
   </body>
