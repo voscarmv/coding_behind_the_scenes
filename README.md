@@ -12,4 +12,16 @@ In this episode I explored a way to draw a line on an HTML5 canvas using the mou
 
 In this episode I created a square object on a canvas and was able to implement drag-and-drop functionality for it. Watch the video [here](https://www.twitch.tv/videos/595206713). You can check out the [source code](https://github.com/voscarmv/coding_behind_the_scenes/blob/d1773ca7baa118c90d8638e617c101a22080fae8/connected_lines/lines.html) and the [live demo](https://rawcdn.githack.com/voscarmv/coding_behind_the_scenes/d1773ca7baa118c90d8638e617c101a22080fae8/connected_lines/lines.html) if you like.
 
-![Drawing a line from the mouse position](screenshots/dragdrop.gif)
+![A Square object with drag-and-drop functionality](screenshots/dragdrop.gif)
+
+## Episode 3: Connecting lines
+
+In this episode I enhanced the Square class from the previous one, and added the Line class. Now I can connect several Square objects with Line objects, and drag-and-drop them around the canvas. Watch the video [here](https://www.twitch.tv/videos/596220515) You can check out the [source code](https://github.com/voscarmv/coding_behind_the_scenes/blob/a8a73fa3a4aa67102bbafb772950c37175b17351/connected_lines/lines.html) and the [live demo](https://rawcdn.githack.com/voscarmv/coding_behind_the_scenes/a8a73fa3a4aa67102bbafb772950c37175b17351/connected_lines/lines.html) if you like.
+
+![Square objects connected by Line objects](screenshots/squareslines.gif)
+
+## Episode 4: Binary tree
+
+In this episode I developed an algorithm to recursively draw a binary tree from an array. Watch the video [here](https://www.twitch.tv/videos/596220515) You can check out the [source code](https://github.com/voscarmv/coding_behind_the_scenes/blob/a8a73fa3a4aa67102bbafb772950c37175b17351/binary_tree/tree.html) and the [live demo](https://rawcdn.githack.com/voscarmv/coding_behind_the_scenes/a8a73fa3a4aa67102bbafb772950c37175b17351/binary_tree/tree.html) if you like.
+
+![A binary tree drawn using recursive post-order.](screenshots/bintree.png)
