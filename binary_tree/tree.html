@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tree</title>
+  </head>
+  <body>
+    <canvas style="border-style:solid;padding: 0;" id="canv"></canvas>
+    <pre id="coords"></pre>
+    <script>
+      var c = document.getElementById("canv");
+      var ctx = c.getContext("2d");
+
+      let tree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6];
+      post_order_tree(tree, 0, 0, 0, c.width, c.height);
+      function post_order_tree(arr, i, xpos, ypos, xsize, ysize){
+        let nodex = xpos + (xsize - xpos) / 2;
+        let nodey = ypos;
+        let lnodex = xpos + (nodex / 2);
+        let lrnodey = ypos + (ysize - ypos) / 2;
+        let rnodex = nodex + nodex / 2;
+        let left = 2*i + 1;
+        if(left < arr.length){
+          this.ctx.beginPath();
+          this.ctx.moveTo(nodex, nodey);
+          this.ctx.lineTo(lnodex, lrnodey);
+          this.ctx.stroke();
+          post_order_tree(arr, left, (xpos)/2 , 0, lnodex, lrnodey);
+        }
+        let right = 2*i + 2;
+        if(right < arr.length){
+          this.ctx.beginPath();
+          this.ctx.moveTo(nodex, nodey);
+          this.ctx.lineTo(rnodex, lrnodey);
+          this.ctx.stroke();
+          post_order_tree(arr, right, xpos+(xsize-xpos)/2, ypos+(ysize-ypos)/2, rnodex, lrnodey + ysize/2);
+        }        
+      }
+    </script>
+  </body>
+</html>
