@@ -10,8 +10,6 @@
       var c = document.getElementById("canv");
       var ctx = c.getContext("2d");
 
-      let tree = [1, 2, 3, 4, 5, 6, 7];
-      post_order_tree(tree, 4, 0, 0, c.width, c.height);
       function recur(n){
         if (n > 0) {
           return "("+recur(n-1)+"+"+recur(n-1)+")";
@@ -20,32 +18,37 @@
         }
       }
       console.log(recur(6));
+
+
+
+      let tree = [1, 2, 3, null, 5, 6, 7, 8, null, 9];
+
+      post_order_tree(tree, 0, 0, 0, c.width, c.height);
       function post_order_tree(arr, i, xpos, ypos, xsize, ysize){
-        if(i < 0){
+        if(i >= arr.length || arr[i] == null){
           return false;
         }
-         left_xpos = xpos;
-         left_ypos = ypos + ysize/2;
-         left_xsize = xsize/2;
-         left_ysize = ysize/2;
+        let left_xpos = xpos;
+        let left_ypos = ypos + ysize/2;
+        let left_xsize = xsize/2;
+        let left_ysize = ysize/2;
 
-         right_xpos = xpos + xsize/2;
-         right_ypos = ypos + ysize/2;
-         right_xsize = xsize/2;
-        right_ysize = ysize/2;
+        let right_xpos = xpos + xsize/2;
+        let right_ypos = ypos + ysize/2;
+        let right_xsize = xsize/2;
+        let right_ysize = ysize/2;
+
+        let left = 2*i + 1;
+        let right = 2*i + 2;
 
         // console.log(arr[i]+": xpos "+xpos+", ypos: "+ypos+", xsize: "+xsize+", ysize: "+ysize);
 
         ctx.beginPath();
-        ctx.rect(left_xpos,left_ypos,left_xsize,left_ysize);
+        ctx.rect(xpos,ypos,xsize,ysize);
         ctx.stroke();
 
-        ctx.beginPath();
-        ctx.rect(right_xpos,right_ypos,right_xsize,right_ysize);
-        ctx.stroke();
-
-        post_order_tree(arr, i-1, left_xpos,left_ypos,left_xsize,left_ysize);
-        post_order_tree(arr, i-1, right_xpos,right_ypos,right_xsize,right_ysize);
+        post_order_tree(arr, left, left_xpos,left_ypos,left_xsize,left_ysize);
+        post_order_tree(arr, right, right_xpos,right_ypos,right_xsize,right_ysize);
       }
     </script>
   </body>
