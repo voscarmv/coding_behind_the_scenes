@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lines</title>
+  </head>
+  <body>
+    <canvas style="border-style:solid;padding: 0;" id="canv"></canvas>
+    <pre id="coords"></pre>
+    <script>
+      var c = document.getElementById("canv");
+      var ctx = c.getContext("2d");
+
+      class Square {
+        constructor(x, y, wh, ctxt){
+          this.xpos = x;
+          this.ypos = y;
+          this.size = wh;
+          this.ctx = ctxt;
+          this.selected = false;
+          this.pointerx = 0;
+          this.pointery = 0;
+          this.left_line = null;
+          this.right_line = null;
+        }
+        draw(){
+          this.ctx.beginPath();
+          this.ctx.rect(this.xpos, this.ypos, this.size, this.size);
+          this.ctx.stroke();
+        }
+        pointer_in(ptrx, ptry){
+          if(ptrx >= this.xpos && ptrx <= this.xpos + this.size && ptry >= this.ypos && ptry <= this.ypos + this.size){
+            return true;
+          } else {
+            return false;
+          }
+        }
+        assign_left_line(line){
+          line.ctx = this.ctx
+          this.left_line = line;
+          this.update_left_line();
+        }
+        update_left_line(){          
+          this.left_line.xend = this.xpos + (this.size / 2);
+          this.left_line.yend = this.ypos + (this.size / 2);
+        }
+        assign_right_line(line){
+          line.ctx = this.ctx
+          this.right_line = line;
+          this.update_right_line();
+        }
+        update_right_line(){
+          this.right_line.xpos = this.xpos + (this.size / 2);
+          this.right_line.ypos = this.ypos + (this.size / 2);
+        }
+        select_square(ptrx, ptry){
+          this.selected = true;
+          this.pointerx = ptrx - this.xpos;
+          this.pointery = ptry - this.ypos;
+        }
+        drag_square(ptrx, ptry){
+          this.xpos = ptrx - this.pointerx;
+          this.ypos = ptry - this.pointery;
+          if(this.left_line != null){
+            this.update_left_line();
+          }
+          if(this.right_line != null){
+            this.update_right_line();
+          }
+        }
+      };
+
+      class Line {
+        constructor(x, y, ye, xe, ctxt){
+          this.xpos = x;
+          this.ypos = y;
+          this.xend = xe;
+          this.yend = ye;
+          this.ctx = ctxt;
+        }
+        draw(){
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.xpos, this.ypos);
+          this.ctx.lineTo(this.xend, this.yend);
+          this.ctx.stroke();
+        }
+      }
+
+      let sq1 = new Square(10, 10, 30, ctx);
+      let sq2 = new Square(100, 20, 30, ctx);
+      let sq3 = new Square(200, 100, 30, ctx);
+      let ln1 = new Line();
+      let ln2 = new Line();
+      let ln3 = new Line();
+
+      sq1.draw(); sq2.draw(); sq3.draw();
+      sq1.assign_right_line(ln1);
+      sq2.assign_left_line(ln1);
+      sq2.assign_right_line(ln2);
+      sq3.assign_left_line(ln2);
+      sq3.assign_right_line(ln3);
+      sq1.assign_left_line(ln3);
+      ln1.draw(); ln2.draw(); ln3.draw();
+
+      let squares = [sq1, sq2, sq3];
+      let lines = [ln1, ln2];
+      console.log(sq1.pointer_in(20,20));
+
+      let rect = ctx.canvas.getBoundingClientRect();
+
+      c.addEventListener('mousedown', e => {
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        squares.forEach(
+          function(square){
+            if(square.pointer_in(x, y)){
+              square.select_square(x, y);
+            }
+          }
+        );
+      });
+
+      c.addEventListener('mousemove', e => {
+        var output = "";
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        if(sq1.pointer_in(x,y)){
+          output = "[" + x + ", " + y + "]";
+        } else {
+          output = x + ", " + y ;
+        }
+
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        squares.forEach(
+          function(square){
+            if(square.selected){
+              square.drag_square(x, y);
+            }
+          }
+        );
+        
+        sq1.draw(); sq2.draw(); sq3.draw();
+        ln1.draw(); ln2.draw(); ln3.draw();
+
+        document.getElementById("coords").innerHTML = output;
+      });
+
+      window.addEventListener('mouseup', e => {
+        sq1.selected = false;
+        sq2.selected = false;
+        sq3.selected = false;
+      });
+
+    </script>
+  </body>
+</html>
