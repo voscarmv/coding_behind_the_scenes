@@ -1,6 +1,6 @@
 [submodule "soundwave/jsfft"]
 	path = soundwave/jsfft
-	url = https://github.com/dntj/jsfft
+	url = https://github.com/voscarmv/jsfft
 [submodule "soundwave/tones"]
 	path = soundwave/tones
-	url = https://github.com/bit101/tones
+	url = https://github.com/voscarmv/tones
