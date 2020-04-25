@@ -128,12 +128,12 @@ draw_plot = (samplearr) => {
   data.FFT();
   replaceToCanvas('fft', data);
 
-  data.map((freq, i, n) => {
-    if (i > n/5 && i < 4*n/5) {
-      freq.real = 0;
-      freq.imag = 0;
-    }
-  });
+  // data.map((freq, i, n) => {
+  //   if (i > n/5 && i < 4*n/5) {
+  //     freq.real = 0;
+  //     freq.imag = 0;
+  //   }
+  // });
 
   replaceToCanvas('original_filtered', data.InvFFT());
 
