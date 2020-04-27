@@ -152,7 +152,7 @@
   let lines = [];
   let points = 10
   for(let i = 0; i < points; i++){
-    squares.push(new Square((i*c.width/(points-1))-10,(c.height/2)-10 + 50*Math.cos(2*Math.PI*(i/(points-1))),20,ctx));
+    squares.push(new Square((i*c.width/(points-1))-10,(c.height/2)-10 + 50*Math.sin(2*Math.PI*(i/(points-1))),20,ctx));
   }
 
   for(let i = 0; i < points; i++){
@@ -259,7 +259,7 @@
         lastindex = i;
       }
     }
-    document.getElementById("coords").innerHTML = samplearr;
+    // document.getElementById("coords").innerHTML = samplearr;
 
     // for(let i = 0; i < samplearr.length; i ++){
     //   samplearr[i] = Math.sin(2*Math.PI*(i/(samplearr.length-1)));

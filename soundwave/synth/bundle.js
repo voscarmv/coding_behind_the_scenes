@@ -124,10 +124,10 @@ draw_plot = (samplearr) => {
   });
 
   // console.log(samplearr);
-  // replaceToCanvas('original', data);
+  replaceToCanvas('original', data);
 
   data.FFT();
-  // replaceToCanvas('fft', data);
+  replaceToCanvas('fft', data);
 
   // data.map((freq, i, n) => {
   //   if (i > n/5 && i < 4*n/5) {
@@ -136,7 +136,7 @@ draw_plot = (samplearr) => {
   //   }
   // });
 
-  // replaceToCanvas('original_filtered', data.InvFFT());
+  // replaceToCanvas('original_filtered', data);
 
   var real = new Float32Array(128);
   var imag = new Float32Array(128);
