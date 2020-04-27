@@ -123,10 +123,11 @@ draw_plot = (samplearr) => {
       value.real = samplearr[i];
   });
 
-  replaceToCanvas('original', data);
+  // console.log(samplearr);
+  // replaceToCanvas('original', data);
 
   data.FFT();
-  replaceToCanvas('fft', data);
+  // replaceToCanvas('fft', data);
 
   // data.map((freq, i, n) => {
   //   if (i > n/5 && i < 4*n/5) {
@@ -135,7 +136,7 @@ draw_plot = (samplearr) => {
   //   }
   // });
 
-  replaceToCanvas('original_filtered', data.InvFFT());
+  // replaceToCanvas('original_filtered', data.InvFFT());
 
   var real = new Float32Array(128);
   var imag = new Float32Array(128);
@@ -145,6 +146,9 @@ draw_plot = (samplearr) => {
     imag[i] = value.imag;
   }
   );
+
+  // console.log(real);
+  // console.log(imag);
 
   pianono(real, imag);
 

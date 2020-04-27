@@ -256,6 +256,9 @@ pianono = (real, imag) => {
 
     // var real = new Float32Array(127);
     // var imag = new Float32Array(127);
+
+    console.log(real);
+    console.log(imag);
     var ac = new AudioContext();
     var osc = ac.createOscillator();
     var wave = ac.createPeriodicWave(real, imag);

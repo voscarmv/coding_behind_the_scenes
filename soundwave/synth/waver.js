@@ -150,16 +150,17 @@
   let numsamples = 128;
   let squares = [];
   let lines = [];
-  for(let i = 0; i < 11; i++){
-    squares.push(new Square((i*c.width/10)-10,(c.height/2)-10,20,ctx));
+  let points = 10
+  for(let i = 0; i < points; i++){
+    squares.push(new Square((i*c.width/(points-1))-10,(c.height/2)-10 + 50*Math.cos(2*Math.PI*(i/(points-1))),20,ctx));
   }
 
-  for(let i = 0; i < 11; i++){
+  for(let i = 0; i < points; i++){
     lines.push(new Line());
   }
 
   squares[0].assign_right_line(lines[0]);
-  for(let i = 1; i <= 10; i++){
+  for(let i = 1; i < points; i++){
     squares[i].assign_left_line(lines[i-1]);
     squares[i].assign_right_line(lines[i]);
   }
@@ -234,9 +235,10 @@
     // sq1.selected = false;
     // sq2.selected = false;
     // sq3.selected = false;
-    
+
     let samplearr = new Array(numsamples);
     samplearr.fill("x");
+    
     squares.forEach(
       function(sq){
         sq.selected = false;
@@ -257,7 +259,11 @@
         lastindex = i;
       }
     }
-    // document.getElementById("coords").innerHTML = samplearr;
+    document.getElementById("coords").innerHTML = samplearr;
+
+    // for(let i = 0; i < samplearr.length; i ++){
+    //   samplearr[i] = Math.sin(2*Math.PI*(i/(samplearr.length-1)));
+    // }
 
     draw_plot(samplearr);
   });
